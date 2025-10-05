@@ -20,7 +20,8 @@ jobs:
           java-version: '11'
 
       - name: Build with Buildozer
-        uses: a-b-r-o-w-n/buildozer-action@v1
+        uses: abrown/buildozer-action@v1
+        
         id: buildozer
         with:
           command: buildozer android debug
