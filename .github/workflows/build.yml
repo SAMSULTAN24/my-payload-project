@@ -1,0 +1,23 @@
+name: Buildozer Android APK
+
+on: [push]
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3  # تحديث بسيط للإصدار
+
+      - name: Build with Buildozer
+        uses: ArtemSBulgakov/buildozer-action@v1.2.1
+        id: buildozer
+        with:
+          command: buildozer android debug
+          
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3  # تحديث بسيط للإصدار
+        with:
+          name: package
+          path: ${{ steps.buildozer.outputs.filename }}
