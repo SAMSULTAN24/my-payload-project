@@ -1,23 +1,32 @@
 name: Buildozer Android APK
 
-on: [push]
+on:
+  push:
+    branches:
+      - main  # أو أي فرع رئيسي تستخدمه
 
 jobs:
-  build-android:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3  # تحديث بسيط للإصدار
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '11'
 
       - name: Build with Buildozer
-        uses: ArtemeBulgakov/buildozer-action@v1.2.1
+        uses: a-b-r-o-w-n/buildozer-action@v1
         id: buildozer
         with:
           command: buildozer android debug
-          
+
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3  # تحديث بسيط للإصدار
+        uses: actions/upload-artifact@v4
         with:
           name: package
           path: ${{ steps.buildozer.outputs.filename }}
